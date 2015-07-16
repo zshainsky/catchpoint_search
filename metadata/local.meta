@@ -1,0 +1,8 @@
+[app/install/install_source_checksum]
+version = 6.2.3
+modtime = 1437068610.753139000
+
+[inputs/script%3A%2F%2F%24SPLUNK_HOME%2Fetc%2Fapps%2Fcatchpoint_search%2Fbin%2Fcatchpoint_splunk.py]
+owner = admin
+version = 6.2.3
+modtime = 1437068920.895383000
