@@ -6,3 +6,8 @@ modtime = 1437068610.753139000
 owner = admin
 version = 6.2.3
 modtime = 1437068920.895383000
+
+[views/catchpoint_commit_history]
+owner = admin
+version = 6.2.3
+modtime = 1437079143.664199000

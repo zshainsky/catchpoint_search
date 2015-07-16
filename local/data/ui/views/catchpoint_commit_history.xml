@@ -1,0 +1,45 @@
+<dashboard>
+  <label>Catchpoint Commit History</label>
+  <description>Overview of the Splunk App for Catchpoint's Dev Cycle</description>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>sourcetype=github_commits| stats count | rename count AS "Total Commits"</query>
+        </search>
+        <option name="underLabel">Total Number of Commits</option>
+        <option name="linkView">search</option>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Number of Commits by User</title>
+        <search>
+          <query>sourcetype=github_commits| stats count  by author | rename count AS "Number of Commits" author AS "Author of Commit"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Commit History</title>
+        <search>
+          <query>sourcetype=github_commits| table author, message, url| rename author AS "Author" message AS "Message" url AS "URL"</query>
+          <earliest></earliest>
+          <latest></latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</dashboard>
