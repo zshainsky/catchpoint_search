@@ -1,0 +1,110 @@
+<setup>
+    <block title="Catchpoint Setup (* fields are required)" endpoint="catchpoint_setup/catchpoint_account" entity="catchpoint_account">
+        <input field="url">
+            <label>Catchpoint API URL*</label>
+            <type>text</type>
+        </input>
+        <input field="client_id">
+            <label>Catchpoint OAuth2 Client ID (Key)*</label>
+            <type>text</type>
+        </input>
+        <input field="client_secret">
+            <label>Catchpoint OAuth2 Client Secret*</label>
+            <type>password</type>
+        </input>
+        <input field="access_token">
+            <label>  </label>
+            <type>text</type>
+        </input>
+        <text>
+            <![CDATA[ <script type="text/javascript">
+              $(function() {
+                var confirm_label = $("label[for='/catchpoint_setup/catchpoint_account/catchpoint_account/client_secret_id_confirm']");
+                confirm_label.text("Confirm Catchpoint OAuth2 Client Secret*");
+                $(".splButton-secondary").hide();
+
+
+                var url = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/url_id");
+                var client_id = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_id_id");
+                var client_secret = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id");
+                var client_secret_confirm = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_confirm_id");
+                var access_token = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/access_token_id");
+                var returned_token = "";
+
+                url.prop("readonly", true);
+                url.css("background-color", "#DEDEDE");
+
+                //access_token.hide();
+                //access_token.clearInputs();
+
+
+                // Get access token
+                // Show Pass or Error Message
+                var show_granted_msg = function(msg, color) {
+                    var granted_msg = $("label[for='/catchpoint_setup/catchpoint_account/catchpoint_account/access_token_id']");
+                    granted_msg.text(msg);
+                    granted_msg.css("color", color);
+                    granted_msg.css("font-weight","Bold");
+                }
+                var show_error = function(id, msg) {
+                    var component = $(id);
+                    var widgeterror = $(".widgeterror", component);
+                    widgeterror.text(msg);
+                    widgeterror.attr("style", "display: block;");
+                    return false;
+                };
+                
+                //Get Access token if all checks above pass
+                function getAccessToken(){
+                    var request_access_token_url = url.val() + "/ui/api/token";
+                    var request_data = {"grant_type":"client_credentials","client_id":client_id.val(), "client_secret":client_secret.val()};
+
+                    console.log(typeof(request_access_token_url) + " " + request_access_token_url);
+                    return $.ajax({
+                        type: "POST",
+                        async: false,
+                        url: request_access_token_url,
+                        data: request_data,
+                        success: function(data){
+                            data = jQuery.parseJSON(data);
+                            console.log("Success data: " + data);
+                            show_granted_msg("Successfully Received Access Token", "Green");
+                            return data;
+                        },
+                        error: function(xhr, status, error){
+                            data = "376850FC7365FE43E0F139C288F69B7544A9178305B90B14C2A3BB2E908AE 46A7218EE81CB2A32BE7EC01024E7F71B34F75BC205E9B84BC26FA2D802724EC8749442BC56D7 B624A72803BB0A649B310C122502976DB599212F33BBEAEC65C5E940E73577C913E259BB2253D CD49FB02CF342E0EFCF";
+
+                            console.log("Error data: " + error);
+                            show_granted_msg("Failed to Receive Access Token", "red");
+                            return error;
+                        }
+                    });
+                };
+
+                $(document).ready(function(){
+                    var submit_btn = $(".splButton-primary");
+                    submit_btn.text("Save and Authenticate");
+                    submit_btn.click(function(){
+
+                        //Perform all necessary checks
+                        if(!client_id.val()){
+                            return show_error("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_id", "Client ID shall be set");
+                        }
+
+                        if(!client_secret.val()){
+                            return show_error("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret", "Client Secret shall be set");
+                        }
+
+                        if(client_secret.val() != client_secret_confirm.val()){
+                            return show_error("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret", "Client Secrets do not match");
+                        }
+                        //returned_token = self.getAccessToken();
+                        //access_token.val("zack");
+                    });
+                });
+                
+              });
+            </script> ]]>
+        </text>
+    </block>
+</setup>

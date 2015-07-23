@@ -35,10 +35,15 @@
       <table>
         <title>Commit History</title>
         <search>
-          <query>sourcetype=github_commits| table author, message, url| rename author AS "Author" message AS "Message" url AS "URL"</query>
-          <earliest></earliest>
+          <query>sourcetype=github_commits| eval formatted_time=strftime(_time, "%b %d, %Y %H:%M")| table formatted_time, author, message, url| rename author AS "Author" message AS "Message" url AS "URL" formatted_time AS "Date"</query>
+          <earliest>0</earliest>
           <latest></latest>
         </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
       </table>
     </panel>
   </row>
