@@ -132,8 +132,7 @@ class ConfigApp(admin.MConfigHandler):
 write them to the [setupentity] stanza
     in <appname>/local/myappsetup.conf  
     '''
-
-        
+    
     self.writeConf('catchpoint', 'catchpoint_account', self.callerArgs.data)
       
 # initialize the handler

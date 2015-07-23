@@ -27,9 +27,10 @@
                 var url = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/url_id");
                 var client_id = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_id_id");
                 var client_secret = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id");
-                var client_secret_confirm = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_confirm_id");
+                var client_secret_confirm = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id_confirm");
                 var access_token = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/access_token_id");
                 var returned_token = "";
+                var testing = 0;
 
                 url.prop("readonly", true);
                 url.css("background-color", "#DEDEDE");
@@ -55,6 +56,7 @@
                 };
                 
                 //Get Access token if all checks above pass
+                /*
                 function getAccessToken(){
                     var request_access_token_url = url.val() + "/ui/api/token";
                     var request_data = {"grant_type":"client_credentials","client_id":client_id.val(), "client_secret":client_secret.val()};
@@ -80,27 +82,36 @@
                         }
                     });
                 };
+                */
 
                 $(document).ready(function(){
                     var submit_btn = $(".splButton-primary");
                     submit_btn.text("Save and Authenticate");
                     submit_btn.click(function(){
+                        var temp_client_id = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_id_id");
+                        var temp_client_secret = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id");
+                        var temp_client_secret_confirm = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id_confirm");
+                        var temp_access_token = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/access_token_id");
+                        console.log(temp_client_secret.val() + " " + temp_client_secret_confirm.val());
 
                         //Perform all necessary checks
-                        if(!client_id.val()){
+                        if(!temp_client_id.val()){
                             return show_error("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_id", "Client ID shall be set");
                         }
 
-                        if(!client_secret.val()){
+                        if(!temp_client_secret.val()){
                             return show_error("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret", "Client Secret shall be set");
                         }
 
-                        if(client_secret.val() != client_secret_confirm.val()){
+                        if(temp_client_secret.val() != temp_client_secret_confirm.val()){
                             return show_error("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret", "Client Secrets do not match");
                         }
-                        //returned_token = self.getAccessToken();
+                        //console.log("here");
+                        //returned_token = getAccessToken();
+                        //console.log(returned_token);
                         //access_token.val("zack");
                     });
+
                 });
                 
               });
