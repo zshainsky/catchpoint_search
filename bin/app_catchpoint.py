@@ -75,6 +75,10 @@ class MIClass(Script):
 			consumer_secret = input_item['consumer_secret']
 			test_id = input_item['test_id']
 			
+			cp_object = CPDrive()
+			cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
+			
+			
 			# consider writing driver retrieve interface to accept variant key / secret / tests.
 			
 			
