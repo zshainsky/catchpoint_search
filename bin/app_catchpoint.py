@@ -75,8 +75,16 @@ class MIClass(Script):
 			consumer_secret = input_item['consumer_secret']
 			test_id = input_item['test_id']
 			
-			# consider writing driver retrieve interface to accept variant key / secret / tests.
+			cp_object = CPDrive()
 			
+			event.stanza = input_name
+			event.data = cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
+			ew.write_event(event)
+			
+			# consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
+			
+if __name__ == "__main__":
+	sys.exit(MIClass().run(sys.argv))
 			
 			
 

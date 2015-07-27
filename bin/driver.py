@@ -12,7 +12,8 @@ class CPDrive(object):
     ):
         self.credentials = None
 
-    def retrieve_rd_wrapper(self):
+    # def retrieve_rd_wrapper(self):
+    def retrieve_rd_wrapper(self, consumer_key, consumer_secret, test_id):
         creds = {
             'client_id': 'F0-C-jSLj1VFDNy',
             'client_secret': '5a3663bd-e664-4af8-a6a3-d128ddb210f9',
@@ -30,8 +31,8 @@ class CPDrive(object):
         }
 
         creds_original = {
-            'client_id': 'RY-Rc-jRiqNSLy7u',
-            'client_secret': 'bbdab1dd-f0a4-4555-b8ed-4835a7b03c74',
+            'client_id': consumer_key, #'RY-Rc-jRiqNSLy7u',
+            'client_secret': consumer_secret, #'bbdab1dd-f0a4-4555-b8ed-4835a7b03c74',
             'refresh_token': 'None',
             'api_URIs': [
                 {'token_uri': {
@@ -40,7 +41,7 @@ class CPDrive(object):
                     'path_template_arg2': 'token/'
                 }},
                 {'endpoint_uri': {
-                    'path_template_arg2': 'v1/performance/raw?tests=76386,81093'
+                    'path_template_arg2': '{0}/performance/raw?tests={1}' .format('v1', test_id) #76386,81093' 
                 }}
             ]
         }
@@ -51,8 +52,8 @@ class CPDrive(object):
         creds['api_URIs'][1]['endpoint_uri']['path_template_arg1'] = creds['api_URIs'][0]['token_uri']['path_template_arg1']
 
         raw_data = catchpoint.Catchpoint().raw(creds)
-        mapped = frame.search(raw_data)
-        return mapped
+        # mapped = frame.search(raw_data) # return unabridged information
+        return raw_data
 
 
     
