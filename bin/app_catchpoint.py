@@ -31,7 +31,7 @@ class MIClass(Script):
 		
 		consumer_secret_arg = Argument(
 			name= "consumer_secret",
-			description = "Recieves client secret here."
+			description = "Recieves client secret here.",
 			# validation = "",
 			data_type = Argument.data_type_string,
 			required_on_edit = True,
