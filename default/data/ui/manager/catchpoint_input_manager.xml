@@ -1,5 +1,5 @@
-<endpoint name="data/inputs/catchpoint_service">
-	<header>Catchpoint is dope af</header>
+<endpoint name="data/inputs/app_catchpoint">
+	<header>Catchpoint</header>
 	<breadcrumb>
     	<parent hidecurrent="False">datainputstats</parent>
     	<name>Catchpoint Modular Input</name>
@@ -15,49 +15,23 @@
 				<view name="create" />
 				<key name="exampleText">Name of this REST API Input</key>
 			</element>
-			<element name="rest_endpoint" label="This is the carter">
+			<element name="consumer_id" label="Consumer ID">
 				<view name="edit" />
 				<view name="create" />
 		  		<view name="list" />
-		  		<key name="exampleText">Neeeeext</key>
+		  		<key name="exampleText">Example Text</key>
 		  	</element>
-		  	<element name="duration" label="My new label">
+		  	<element name="consumer_secret" label="My new label">
 		  		<view name="edit" />
 				<view name="create" />
 		  		<view name="list" />
-				<key name="exampleText">Example Example </key>
+				<key name="exampleText">Example Text</key>
 		  	</element>
-
-		  	<element name="drop_down" type="select" label="Element Selection">
-				<onChange>
-					<key name="_action">showonly</key>
-					<group_set>
-						<group name="element_one" />
-						<group name="element_two" />
-					</group_set>
-					<key name="element_one">element_one</key>
-					<key name="element_two">element_two</key>
-				</onChange>
-				<view name="edit" />
-				<view name="create" />
-				<key name="exampleText"> Select an element: one or two.</key>
-				<options>
-					<opt value="element_one" label="Element One" />
-					<opt value="element_two" label="Element Two" />
-				</options>
-		  	</element>
-
-		  	<element name="element_one" type="fieldset" />
-		  	<element name="element_two" type="fieldset">
+		  	<element name="test_id" label="Test ID">
 		  		<view name="edit" />
-		  		<view name="create" />
-		  		<elements>
-			  		<element name="element_two_text" type="textfield" label="Element Two">
-			  			<view name="edit" />
-			  			<view name="create" />
-			  			<key name="exampleText"> You have selected Example Two!</key>
-			  		</element>
-			  	</elements>
+				<view name="create" />
+		  		<view name="list" />
+				<key name="exampleText">Example Text</key>
 		  	</element>
 		</elements>
   	</element>
