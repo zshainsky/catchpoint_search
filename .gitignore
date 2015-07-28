@@ -1,3 +1,4 @@
 .idea/
 bin/requests/*.pyc
 bin/splunklib/*.pyc
+*.pyc
