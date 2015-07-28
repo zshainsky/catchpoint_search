@@ -1,5 +1,4 @@
-[catchpoint_service://<name>]
-rest_endpoint = <value>
-duration = <value>
-drop_down = <value>
-element_two_text = <value>
+[app_catchpoint://<name>]
+consumer_id = <value>
+consumer_secret = <value>
+test_id = <value>

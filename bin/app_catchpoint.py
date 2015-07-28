@@ -1,6 +1,10 @@
 import sys
 from splunklib.modularinput import *
+<<<<<<< HEAD
 # import logging, time, httplib2
+=======
+import logging, time, httplib2
+>>>>>>> 311514e49ebed9286dd3511525efa5480323629c
 from catchpoint import *
 from driver import *
 
@@ -8,7 +12,10 @@ from driver import *
 class MIClass(Script):
     # overview: writing errors to a log file to ensure that debugging
     # code doesn't interfere with Splunk's operations.
+<<<<<<< HEAD
     # /Applications/Splunk/bin/splunk
+=======
+>>>>>>> 311514e49ebed9286dd3511525efa5480323629c
 
     def setup_logging(self):
         pass
@@ -75,6 +82,7 @@ class MIClass(Script):
             sourceType='json'
         )
 
+<<<<<<< HEAD
         # for input_name, input_item in inputs.inputs.iteritems():
         consumer_key = inputs.input_item['consumer_key']
         consumer_secret = inputs.input_item['consumer_secret']
@@ -89,6 +97,22 @@ class MIClass(Script):
         # consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
 
 CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 76386)
+=======
+        for input_name, input_item in inputs.inputs.iteritems():
+            consumer_key = input_item['consumer_key']
+            consumer_secret = input_item['consumer_secret']
+            test_id = input_item['test_id']
+
+            cp_object = CPDrive()
+
+            event_data.stanza = input_name
+            event_data.data = cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
+            ew.write_event(event_data)
+
+        # consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
+
+CPDrive().retrieve_rd_wrapper('RY-Rc-jRiqNSLy7u', 'bbdab1dd-f0a4-4555-b8ed-4835a7b03c74', 76386)
+>>>>>>> 311514e49ebed9286dd3511525efa5480323629c
 
 if __name__ == "__main__":
     sys.exit(MIClass().run(sys.argv))
