@@ -1,7 +1,6 @@
 import sys
 from splunklib.modularinput import *
 # import logging, time, httplib2
-import logging, time, httplib2
 from catchpoint import *
 from driver import *
 

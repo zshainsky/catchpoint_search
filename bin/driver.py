@@ -55,8 +55,6 @@ class CPDrive(object):
         # mapped = frame.search(raw_data) # return unabridged information
         return raw_data
 
-
-    
 # for testing purposes only below:
 # def getEvent(result):
 #     event = {'_time': time.time(),  # {'start': str(result['_time']['start']), 'end': str(result['_time']['end'])},
@@ -66,7 +64,7 @@ class CPDrive(object):
 #              'dimension': {'id': str(result['dimension']['id']), 'name': str(result['dimension']['name'])}}
 #     return event
 #
-rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 76386)
+# rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 76386)
 # for result in rd:
 #     print getEvent(result)
 #     print key
