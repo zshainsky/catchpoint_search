@@ -46,7 +46,7 @@ class CPDrive(object):
             ]
         }
 
-        creds = creds_original
+        creds = creds
         # force URIs developed to have the same beginning path
         creds['api_URIs'][1]['endpoint_uri']['hostname_prefix'] = creds['api_URIs'][0]['token_uri']['hostname_prefix']
         creds['api_URIs'][1]['endpoint_uri']['path_template_arg1'] = creds['api_URIs'][0]['token_uri']['path_template_arg1']

@@ -81,7 +81,6 @@ class Catchpoint(object):
         except requests.exceptions.ConnectionError as e:
             self._connection_error(e)
 
-
         self._debug("URL: " + r.url)
         data = r.json()  # overview: return value is key/value pair json, accessible through array indexing
 
