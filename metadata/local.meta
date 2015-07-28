@@ -10,12 +10,17 @@ modtime = 1437068920.895383000
 [views/catchpoint_commit_history]
 owner = admin
 version = 6.2.3
-modtime = 1438015301.875428000
+modtime = 1438126443.202289000
 
 [catchpoint/catchpoint_account]
 version = 6.2.3
-modtime = 1437755300.534596000
+modtime = 1438127433.989765000
 
 [app/install/is_configured]
 version = 6.2.3
-modtime = 1437755301.175873000
+modtime = 1438127434.689344000
+
+[inputs/app_catchpoint%3A%2F%2FTest%20Input]
+owner = admin
+version = 6.2.3
+modtime = 1438126639.964272000

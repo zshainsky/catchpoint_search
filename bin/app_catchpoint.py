@@ -1,5 +1,6 @@
 import sys
 from splunklib.modularinput import *
+import splunk.clilib.cli_common as cli_common
 # import logging, time, httplib2
 from catchpoint import *
 from driver import *
@@ -74,21 +75,26 @@ class MIClass(Script):
 			sourcetype='json'
 		)
 
+
+		# Create driver class object
 		cp_object = CPDrive()
-		event_data.data = cp_object.retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
-		print event_data.data
+
+		# Get data from the catchpoint configuration file at stanza [catchpoint_account]. This is configured in the setup ui: http://localhost:8000/en-US/manager/catchpoint_search/apps/local/catchpoint_search/setup?action=edit
+		setup_input = cli_common.getConfStanza("catchpoint", "catchpoint_account")
+		consumer_key = setup_input['client_key']
+		consumer_secret = setup_input['client_secret']
+
+		# Keep for testing:
+		# event_data.data = cp_object.retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
 		# consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
 
 		for input_name, input_item in inputs.inputs.iteritems():
-			consumer_key = input_item['consumer_key']
-			consumer_secret = input_item['consumer_secret']
 			test_id = input_item['test_id']
 
-			cp_object = CPDrive()
-
 			event_data.stanza = input_name
-			# event_data.data = cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
-			ew.write_event(event_data)
+			event_data.data = cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
+			print event_data.data
+			# ew.write_event(event_data)
 
 		# consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
 

@@ -42,7 +42,7 @@ logger.info(sys.path)
 logger.info("*******************************")
 
 class ConfigApp(admin.MConfigHandler):
-  catchpoint_args = ("url", "client_id", "client_secret", "access_token")
+  catchpoint_args = ("url", "client_key", "client_secret", "access_token")
   cp = catchpoint.Catchpoint()
   
   '''
