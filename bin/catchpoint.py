@@ -117,6 +117,7 @@ class Catchpoint(object):
             r_data = r.json()
         except TypeError as e:
             return e
+        # print r_data
         return r_data
 
     def _expired_token_check(self, data):

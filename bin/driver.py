@@ -46,7 +46,7 @@ class CPDrive(object):
             ]
         }
 
-        creds = creds
+        creds = creds_original
         # force URIs developed to have the same beginning path
         creds['api_URIs'][1]['endpoint_uri']['hostname_prefix'] = creds['api_URIs'][0]['token_uri']['hostname_prefix']
         creds['api_URIs'][1]['endpoint_uri']['path_template_arg1'] = creds['api_URIs'][0]['token_uri']['path_template_arg1']
@@ -64,7 +64,7 @@ class CPDrive(object):
 #              'dimension': {'id': str(result['dimension']['id']), 'name': str(result['dimension']['name'])}}
 #     return event
 #
-# rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 76386)
+# rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
 # for result in rd:
 #     print getEvent(result)
 #     print key
