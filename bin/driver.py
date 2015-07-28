@@ -66,7 +66,7 @@ class CPDrive(object):
 #              'dimension': {'id': str(result['dimension']['id']), 'name': str(result['dimension']['name'])}}
 #     return event
 #
-# rd = CPDrive().retrieve_rd_wrapper()
+rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 76386)
 # for result in rd:
 #     print getEvent(result)
 #     print key

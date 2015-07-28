@@ -1,7 +1,7 @@
 import sys
 import base64
 import json
-import requests #overview: importing the request module #note:install modules: C:\Python34\python setup.py install
+import requests  # overview: importing the request module #note:install modules: C:\Python34\python setup.py install
 # import requests_oauthlib
 # from requests_oauthlib import OAuth2
 # import ssl
@@ -13,11 +13,9 @@ class CatchpointError(Exception):
     pass
 
 
-
 class Catchpoint(object):
-
     def __init__(
-        self
+            self
 
     ):
         """
@@ -54,7 +52,7 @@ class Catchpoint(object):
             sys.stderr.write(msg + '\n')
 
     def _connection_error(self, e):
-        msg = "Unable to reach {0}: {1}" .format(self.host, e)
+        msg = "Unable to reach {0}: {1}".format(self.host, e)
         sys.exit(msg)
 
     def _authorize(self, creds):
@@ -66,10 +64,10 @@ class Catchpoint(object):
 
         self._debug("Creating auth url...")
         uri = self.token_uri
-        
+
         payload = {
             'refresh_token': creds['refresh_token'],
-            'grant_type': 'client_credentials',#'refresh_token',
+            'grant_type': 'client_credentials',  # 'refresh_token',
             'client_id': creds['client_id'],
             'client_secret': creds['client_secret']
         }
@@ -77,10 +75,9 @@ class Catchpoint(object):
         # make request
         self._debug("Making auth request...")
         try:
-            r = requests.post(uri, data=payload) 
+            r = requests.post(str(uri), data=payload)
         except requests.exceptions.ConnectionError as e:
             self._connection_error(e)
-
 
         self._debug("URL: " + r.url)
         data = r.json()  # overview: return value is key/value pair json, accessible through array indexing
@@ -102,15 +99,14 @@ class Catchpoint(object):
             'Accept': self.content_type,
             'Authorization': "Bearer " + base64.b64encode(
 
-                self._token .encode('ascii')
+                self._token.encode('ascii')
 
             ).decode("utf-8")
         }
 
-
         try:
             r = requests.get(uri, headers=headers, params=params, data=data, verify=True)
-            if r.status_code != 200: # if not ok,  throw
+            if r.status_code != 200:  # if not ok,  throw
 
                 raise CatchpointError(r.content)
         except requests.ConnectionError as e:
@@ -158,17 +154,16 @@ class Catchpoint(object):
         token_path = path_template.format(path_arg1, path_arg2)
 
         hostname_prefix = creds['api_URIs'][0]['token_uri']['hostname_prefix']
-        host = "https://{0}catchpoint.com/" .format(hostname_prefix)
-        self.token_uri = "{0}{1}" .format(host, token_path)
+        host = "https://{0}catchpoint.com/".format(hostname_prefix)
+        self.token_uri = "{0}{1}".format(host, token_path)
 
         """ overview: build api endpoint uri: path construction too. """
         path_arg1 = creds['api_URIs'][1]['endpoint_uri']['path_template_arg1']
         path_arg2 = creds['api_URIs'][1]['endpoint_uri']['path_template_arg2']
-        api_endpoint_path = path_template .format(path_arg1, path_arg2)
-        self.endpoint_uri = "{0}{1}" .format(host, api_endpoint_path)
+        api_endpoint_path = path_template.format(path_arg1, path_arg2)
+        self.endpoint_uri = "{0}{1}".format(host, api_endpoint_path)
 
-
-    def raw(self, creds): 
+    def raw(self, creds):
         """
         Retrieve raw performance chart data.
         """
@@ -176,5 +171,5 @@ class Catchpoint(object):
         self._develop_URIs(creds)
         if not self._auth:
             self._authorize(creds)
-            
+
         return self._make_request(self.endpoint_uri)
