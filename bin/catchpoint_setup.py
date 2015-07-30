@@ -7,7 +7,8 @@ import sys, os
 import os.path as op
 import logging, logging.handlers
 sys.path.append(op.join(op.dirname(op.abspath(__file__)), ""))
-import catchpoint as catchpoint
+from catchpoint import *
+from driver import *
 # import your required python modules
 
 '''
@@ -37,8 +38,6 @@ def setup_logger(fileName):
   splunk.setupSplunkLogger(logger, LOGGING_DEFAULT_CONFIG_FILE, LOGGING_LOCAL_CONFIG_FILE, LOGGING_STANZA_NAME)
   return logger
 logger = setup_logger("catchpoint_setup.log")
-logger.info(op.join(op.dirname(op.abspath(__file__)), ""))
-logger.info(sys.path)
 logger.info("*******************************")
 
 class ConfigApp(admin.MConfigHandler):
@@ -49,14 +48,17 @@ class ConfigApp(admin.MConfigHandler):
   Changes argument format from how it is received from the web form to match the expexted creds format from: catchpoint.py _authorize(self, creds)
   '''
   def changeArgsFormat(self, args):
-    logger.info("Canging Args...")
+    logger.info("Changing Args...")
     tempArgs = {}
     for arg in self.catchpoint_args:
       if arg == "access_token":
         tempArgs["refresh_token"] = args[arg][0]
+        logger.info("refresh Token=")
         logger.info(tempArgs["refresh_token"])
       else:
         tempArgs[arg] = args[arg][0]
+        logger.info("Other Args: ")
+        logger.info(arg)
         logger.info(tempArgs[arg])
     return tempArgs
   
@@ -64,10 +66,18 @@ class ConfigApp(admin.MConfigHandler):
   Get Access_token from form input
   '''
   def requestToken(self, args):
+    # Create Driver and Catchpoint class objects
+    catchpoint = Catchpoint()
+    cp_object = CPDrive()
+
+    # Change args to proper format
     creds = self.changeArgsFormat(args)
     logger.info("Authorizing...")
-    self.cp._authorize(creds)
-    logger.info("Authoization complete: New Authtoken Generated")
+    # Sets _token variable in Catchpoint() class
+    catchpoint._authorize(creds)
+    logger.info("Authoization complete: New Authtoken Generated. Token=")
+    logger.info(catchpoint._token)
+    return catchpoint._token
 
   '''
   Set up supported arguments
@@ -107,7 +117,8 @@ class ConfigApp(admin.MConfigHandler):
             if val is None:
               val = ''
             confInfo[stanza].append(key, val)
-      confInfo["catchpoint_account"].append("access_token","")
+      # Reset access_token to "". This never allows access_token to be set. Keep disabled.
+      # confInfo["catchpoint_account"].append("access_token","")
 
           
   '''
@@ -123,10 +134,17 @@ class ConfigApp(admin.MConfigHandler):
       if args.get(arg, None) and args[arg][0] is None:
         args[arg][0] = ""
 
-    #Request Token and store it in "access_token" config variable
-    #self.requestToken(args)
-    #returnedToken = self.requestToken(args)
-    #args["access_token"][0] = returnedToken
+    # Request Token and store it in "access_token" config variable
+    # returnedToken = self.requestToken(args)    
+
+    # TESTING: 
+    # returnedToken = "temporary_token"
+    
+    # if not returnedToken:
+      # args["access_token"][0] = returnedToken
+    
+    logger.info("access_token=")
+    logger.info(args["access_token"][0])
     '''
     Since we are using a conf file to store parameters, 
 write them to the [setupentity] stanza

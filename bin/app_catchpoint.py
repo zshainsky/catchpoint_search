@@ -18,7 +18,7 @@ class MIClass(Script):
 
 		scheme.description = "Stream specified test metrics into Splunk from Catchpoint"
 		scheme.use_external_validation = True
-		scheme.use_single_instance = True
+		scheme.use_single_instance = False
 
 		test_arg = Argument(
 			name="test_id",
@@ -61,6 +61,8 @@ class MIClass(Script):
 		setup_input = cli_common.getConfStanza("catchpoint", "catchpoint_account")
 		consumer_key = setup_input['client_key']
 		consumer_secret = setup_input['client_secret']
+		# Here we should be able to get the access_token that was set on the setup page. IS THIS NECESSARY??
+		# access_token = setup_input['access_token']
 
 		# Testing:
 		# event_data.data = cp_object.retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)

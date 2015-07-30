@@ -14,13 +14,8 @@ modtime = 1438126443.202289000
 
 [catchpoint/catchpoint_account]
 version = 6.2.3
-modtime = 1438127433.989765000
+modtime = 1438207259.921353000
 
 [app/install/is_configured]
 version = 6.2.3
-modtime = 1438127434.689344000
-
-[inputs/app_catchpoint%3A%2F%2FWeb%20Metrics]
-owner = admin
-version = 6.2.3
-modtime = 1438129289.740061000
+modtime = 1438207260.582388000
