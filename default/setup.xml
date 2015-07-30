@@ -35,9 +35,8 @@
                 url.prop("readonly", true);
                 url.css("background-color", "#DEDEDE");
 
-                //access_token.hide();
-                //access_token.clearInputs();
-
+                access_token.hide();
+                // access_token.clearInputs();
 
                 // Get access token
                 // Show Pass or Error Message
@@ -46,7 +45,8 @@
                     granted_msg.text(msg);
                     granted_msg.css("color", color);
                     granted_msg.css("font-weight","Bold");
-                }
+                };
+
                 var show_error = function(id, msg) {
                     var component = $(id);
                     var widgeterror = $(".widgeterror", component);
@@ -54,45 +54,33 @@
                     widgeterror.attr("style", "display: block;");
                     return false;
                 };
-                
-                //Get Access token if all checks above pass
-                /*
-                function getAccessToken(){
-                    var request_access_token_url = url.val() + "/ui/api/token";
-                    var request_data = {"grant_type":"client_credentials","client_key":client_key.val(), "client_secret":client_secret.val()};
 
-                    console.log(typeof(request_access_token_url) + " " + request_access_token_url);
-                    return $.ajax({
-                        type: "POST",
-                        async: false,
-                        url: request_access_token_url,
-                        data: request_data,
-                        success: function(data){
-                            data = jQuery.parseJSON(data);
-                            console.log("Success data: " + data);
-                            show_granted_msg("Successfully Received Access Token", "Green");
-                            return data;
-                        },
-                        error: function(xhr, status, error){
-                            data = "376850FC7365FE43E0F139C288F69B7544A9178305B90B14C2A3BB2E908AE 46A7218EE81CB2A32BE7EC01024E7F71B34F75BC205E9B84BC26FA2D802724EC8749442BC56D7 B624A72803BB0A649B310C122502976DB599212F33BBEAEC65C5E940E73577C913E259BB2253D CD49FB02CF342E0EFCF";
-
-                            console.log("Error data: " + error);
-                            show_granted_msg("Failed to Receive Access Token", "red");
-                            return error;
-                        }
-                    });
+                var add_index_link = function(append_id) {
+                    var append_obj = $(append_id);
+                    append_obj.append("<div id=\"index_link\"><br>Note:<ul><li><p>An index named \"catchpoint\" has been added automatically with default settings. To change the size or other settings of this index, copy the stanza labeled [catchpoint] in <APP_HOME>/default/index.conf to the <APP_HOME>/local/index.conf and make changes as needed. </p></li></ul></div>")
                 };
-                */
 
                 $(document).ready(function(){
                     var submit_btn = $(".splButton-primary");
                     submit_btn.text("Save and Authenticate");
+
+                    console.log(access_token.val())
+                    if(access_token.val() === "" || access_token.val() === null || access_token.val() === undefined){
+                        show_granted_msg("No Access Token Set", "red");
+                    }else{
+                        show_granted_msg("Token Set -- Refresh token by clicking the 'Save and Authenticate Button'", "Green");
+                    }
+
+
+                    add_index_link("#item-\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/access_token");
+
                     submit_btn.click(function(){
                         var temp_client_key = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_key_id");
                         var temp_client_secret = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id");
                         var temp_client_secret_confirm = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/client_secret_id_confirm");
                         var temp_access_token = $("#\\/catchpoint_setup\\/catchpoint_account\\/catchpoint_account\\/access_token_id");
                         console.log(temp_client_secret.val() + " " + temp_client_secret_confirm.val());
+
 
                         //Perform all necessary checks
                         if(!temp_client_key.val()){
