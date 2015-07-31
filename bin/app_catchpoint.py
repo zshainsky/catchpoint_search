@@ -4,6 +4,7 @@ import splunk.clilib.cli_common as cli_common
 # import logging, time, httplib2
 from catchpoint import *
 from driver import *
+import json
 
 class MIClass(Script):
 	# overview: writing errors to a log file to ensure that debugging
@@ -18,7 +19,7 @@ class MIClass(Script):
 
 		scheme.description = "Stream specified test metrics into Splunk from Catchpoint"
 		scheme.use_external_validation = True
-		scheme.use_single_instance = False
+		scheme.use_single_instance = True
 
 		test_arg = Argument(
 			name="test_id",
@@ -47,11 +48,12 @@ class MIClass(Script):
 		# A 'source type' determines how Splunk Enterprise
 		# formats the data during the indexing process.
 
-		event_data = Event(
-			index='catchpoint',  # assuming container element which holds all events.
-			sourcetype='json',
-			source='catchpoint_input'
-		)
+		event_data = Event()
+		event_data.index = "catchpoint"
+		# event_data.sourcetype="json"
+		#	index='catchpoint',  # assuming container element which holds all events.
+		#	sourcetype='json'
+		
 
 
 		# Create driver class object
@@ -71,12 +73,14 @@ class MIClass(Script):
 		for input_name, input_item in inputs.inputs.iteritems():
 			test_id = input_item['test_id']
 
-			event_data.stanza = "stanza.stanza"
-			event_data.data = cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
+			event_data.stanza = input_name
+			content = cp_object.retrieve_rd_wrapper(consumer_key, consumer_secret, test_id)
+			# Must convert the Python Dictionary to a String for splunk to write to stdout and ingest data
+			event_data.data = json.dumps(content)
 
 			# Testing:
 			# print event_data.data
-			# ew.write_event(event_data)
+			ew.write_event(event_data)
 
 		# consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
 
