@@ -52,8 +52,8 @@ class CPDrive(object):
         creds['api_URIs'][1]['endpoint_uri']['path_template_arg1'] = creds['api_URIs'][0]['token_uri']['path_template_arg1']
 
         raw_data = catchpoint.Catchpoint().raw(creds)
-        # mapped = frame.search(raw_data) # return unabridged information
-        return raw_data
+        mapped = frame.search(raw_data)  # unabridged, raw information
+        return mapped  # returns the mapped metrics
 
 # for testing purposes only below:
 # def getEvent(result):
@@ -64,7 +64,7 @@ class CPDrive(object):
 #              'dimension': {'id': str(result['dimension']['id']), 'name': str(result['dimension']['name'])}}
 #     return event
 #
-# rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
+rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
 # for result in rd:
 #     print getEvent(result)
 #     print key

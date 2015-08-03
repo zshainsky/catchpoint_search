@@ -22,6 +22,7 @@ def search(structure):
     field_keys = {}
     structure = enumerate_data(structure)
     the_ledger = []
+    details = []
     if structure is None:
         return
     if len(structure) == 0:
@@ -29,9 +30,12 @@ def search(structure):
     if len(structure) > 0:
         for i in range(len(structure)):
             if structure[i] == 'start':
-                start = data[structure[i]]
+                the_ledger.append({'start': str(data[structure[i]])})
             if structure[i] == 'end':
-                end = data[structure[i]]
+                the_ledger.append({'end': str(data[structure[i]])})
+            if structure[i] == 'timezone':
+                the_ledger.append({'timezone': {'id': data[structure[i]]['id'],
+                                                'name': str(data[structure[i]]['name'])}})
             if structure[i] == 'detail':
                 inner_data = enumerate_data(data[structure[i]])
                 for j in range(len(data[structure[i]])):
@@ -73,8 +77,9 @@ def search(structure):
                                     an_item['breakdown_1'] = data[structure[i]][inner_data[j]][s][enum_fields[k]]
                                 elif enum_fields[k] == 'dimension':
                                     an_item['dimension'] = data[structure[i]][inner_data[j]][s][enum_fields[k]]
-                            the_ledger.append(an_item)
+                            details.append(an_item)
 
+    the_ledger.append({"detail": details})
     return the_ledger
 
 # testing purposes.
