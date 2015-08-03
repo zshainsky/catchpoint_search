@@ -61,7 +61,7 @@ class MIClass(Script):
 
 		# Get data from the catchpoint configuration file at stanza [catchpoint_account]. This is configured in the setup ui: http://localhost:8000/en-US/manager/catchpoint_search/apps/local/catchpoint_search/setup?action=edit
 		setup_input = cli_common.getConfStanza("catchpoint", "catchpoint_account")
-		consumer_key = setup_input['client_key']
+		consumer_key = setup_input['client_id']
 		consumer_secret = setup_input['client_secret']
 		# Here we should be able to get the access_token that was set on the setup page. IS THIS NECESSARY??
 		# access_token = setup_input['access_token']
