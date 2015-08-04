@@ -71,7 +71,8 @@ class CPDrive(object):
 
 # for index in content["detail"]:
 #     metric = content["detail"][index]
+#     # print metric
 #     element = {'start': content['start'], 'end': content['end'], 'timezone': content['timezone'],
 #            'breakdown_1': metric['breakdown_1'], 'breakdown_2': metric['breakdown_2'], 'dimension': metric['dimension'],
-#            'host_Ip': metric['host_Ip'], 'synthetic_metric': metric['synthetic_metric'] }
+#            'host_Ip': metric['host_Ip'], 'synthetic_metric': metric['synthetic_metrics'] }
 #     print '\n\n the event: \n', json.dumps(element, sort_keys=True)
