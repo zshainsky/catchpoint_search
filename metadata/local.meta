@@ -19,3 +19,7 @@ modtime = 1438207259.921353000
 [app/install/is_configured]
 version = 6.2.3
 modtime = 1438207260.582388000
+
+[app/install/state]
+version = 6.2.4
+modtime = 1438697847.144255000
