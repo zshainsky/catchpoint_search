@@ -8,7 +8,6 @@ import json
 
 
 class MIClass(Script):
-<<<<<<< HEAD
     # overview: writing errors to a log file to ensure that debugging
     # code doesn't interfere with Splunk's operations.
     # /Applications/Splunk/bin/splunk
@@ -167,7 +166,6 @@ class MIClass(Script):
 			ew.write_event(event_data)
 
 		# consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
->>>>>>> 610c445eebd71b1cdfe1801cf84e96337940194d
 
 if __name__ == "__main__":
     sys.exit(MIClass().run(sys.argv))
