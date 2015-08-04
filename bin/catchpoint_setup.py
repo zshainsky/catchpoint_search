@@ -9,6 +9,7 @@ import logging, logging.handlers
 sys.path.append(op.join(op.dirname(op.abspath(__file__)), ""))
 from catchpoint import *
 from driver import *
+import json
 # import your required python modules
 
 '''
@@ -41,7 +42,7 @@ logger = setup_logger("catchpoint_setup.log")
 logger.info("*******************************")
 
 class ConfigApp(admin.MConfigHandler):
-  catchpoint_args = ("url", "client_key", "client_secret", "access_token")
+  catchpoint_args = ("url", "client_id", "client_secret", "access_token")
   cp = catchpoint.Catchpoint()
   
   '''
@@ -49,10 +50,11 @@ class ConfigApp(admin.MConfigHandler):
   '''
   def changeArgsFormat(self, args):
     logger.info("Changing Args...")
+    logger.info(args)
     tempArgs = {}
     for arg in self.catchpoint_args:
       if arg == "access_token":
-        tempArgs["refresh_token"] = args[arg][0]
+        tempArgs["refresh_token"] = ""
         logger.info("refresh Token=")
         logger.info(tempArgs["refresh_token"])
       else:
@@ -60,6 +62,20 @@ class ConfigApp(admin.MConfigHandler):
         logger.info("Other Args: ")
         logger.info(arg)
         logger.info(tempArgs[arg])
+
+    tempArgs['api_URIs'] = [
+                {'token_uri': {
+                    'hostname_prefix': 'io.',
+                    'path_template_arg1': 'ui/',
+                    'path_template_arg2': 'token/'
+                }},
+                {'endpoint_uri': {
+                    'path_template_arg1': '',
+                    'path_template_arg2': ''
+                }}
+                ]
+
+    logger.info(tempArgs)
     return tempArgs
   
   '''
@@ -74,6 +90,7 @@ class ConfigApp(admin.MConfigHandler):
     creds = self.changeArgsFormat(args)
     logger.info("Authorizing...")
     # Sets _token variable in Catchpoint() class
+    catchpoint._develop_URIs(creds)
     catchpoint._authorize(creds)
     logger.info("Authoization complete: New Authtoken Generated. Token=")
     logger.info(catchpoint._token)
@@ -135,13 +152,14 @@ class ConfigApp(admin.MConfigHandler):
         args[arg][0] = ""
 
     # Request Token and store it in "access_token" config variable
-    # returnedToken = self.requestToken(args)    
+    returnedToken = self.requestToken(args)    
 
     # TESTING: 
     # returnedToken = "temporary_token"
     
-    # if not returnedToken:
-      # args["access_token"][0] = returnedToken
+    if returnedToken:
+      logger.info("returned token.......")
+      args["access_token"][0] = returnedToken
     
     logger.info("access_token=")
     logger.info(args["access_token"][0])

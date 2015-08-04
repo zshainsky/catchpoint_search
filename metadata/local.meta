@@ -14,12 +14,16 @@ modtime = 1438126443.202289000
 
 [catchpoint/catchpoint_account]
 version = 6.2.3
-modtime = 1438207259.921353000
+modtime = 1438616256.908182000
 
 [app/install/is_configured]
 version = 6.2.3
+<<<<<<< HEAD
 modtime = 1438207260.582388000
 
 [app/install/state]
 version = 6.2.4
 modtime = 1438697847.144255000
+=======
+modtime = 1438616257.561058000
+>>>>>>> 610c445eebd71b1cdfe1801cf84e96337940194d
