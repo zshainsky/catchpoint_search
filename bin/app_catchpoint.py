@@ -88,8 +88,6 @@ class MIClass(Script):
                 ew.write_event(event_data)
 
                 # consider writing driver retrieve interface to accept variant key / secret / tests. -- update: done.
-
-=======
 	# overview: writing errors to a log file to ensure that debugging
 	# code doesn't interfere with Splunk's operations.
 	# /Applications/Splunk/bin/splunk
