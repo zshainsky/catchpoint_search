@@ -2,6 +2,7 @@
 import time
 import catchpoint
 import frame
+import json
 
 # overview: driver file -- define your catchpoint credentials;  -- a dictionary.
 
@@ -53,26 +54,24 @@ class CPDrive(object):
 
         raw_data = catchpoint.Catchpoint().raw(creds)
         mapped = frame.search(raw_data)  # unabridged, raw information
-        return mapped  # returns the mapped metrics
+        # print json.dumps(mapped)
+        # json.dumps(mapped["detail"])
+
+        return mapped  # json.dumps(mapped, sort_keys=True, indent=4, separators=(',', ': '))
 
 # for testing purposes only below:
-# def getEvent(result):
-#     event = {'_time': time.time(),  # {'start': str(result['_time']['start']), 'end': str(result['_time']['end'])},
-#              'synthetic_metrics': result['synthetic_metrics'], 'host_Ip': str(result['host_Ip']),
-#              'breakdown_2': {'id': str(result['breakdown_2']['id']), 'name': str(result['breakdown_2']['name'])},
-#              'breakdown_1': {'id': str(result['breakdown_1']['id']), 'name': str(result['breakdown_1']['name'])},
-#              'dimension': {'id': str(result['dimension']['id']), 'name': str(result['dimension']['name'])}}
-#     return event
-#
-rd = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
-# for result in rd:
-#     print getEvent(result)
-#     print key
-#     print
-#     for element in key:
-#         # if element['synthetic_metrics']:
-#         #     pass
-#         # print element['synthetic_metrics']
-#         print element
+# content = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
+# for detail_index in rd["detail"]:
+#     event = {'start': rd['start'],
+#              'end': rd['end'],
+#              'timezone': rd['timezone'],
+#              detail_index: rd["detail"][detail_index]}
+#     print '\n\nthe event: \n', json.dumps(event, sort_keys=True)
 
 
+# for index in content["detail"]:
+#     metric = content["detail"][index]
+#     element = {'start': content['start'], 'end': content['end'], 'timezone': content['timezone'],
+#            'breakdown_1': metric['breakdown_1'], 'breakdown_2': metric['breakdown_2'], 'dimension': metric['dimension'],
+#            'host_Ip': metric['host_Ip'], 'synthetic_metric': metric['synthetic_metric'] }
+#     print '\n\n the event: \n', json.dumps(element, sort_keys=True)
