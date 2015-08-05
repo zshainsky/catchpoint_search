@@ -35,7 +35,7 @@
       <table>
         <title>Commit History</title>
         <search>
-          <query>sourcetype=github_commits| eval formatted_time=strftime(_time, "%b %d, %Y %H:%M")| table formatted_time, author, message, url| rename author AS "Author" message AS "Message" url AS "URL" formatted_time AS "Date"</query>
+          <query>sourcetype=github_commits| sort -_time| eval formatted_time=strftime(_time, "%b %d, %Y %H:%M")| table formatted_time, author, message |rename author AS "Author" message AS "Message" formatted_time AS "Date"</query>
           <earliest>0</earliest>
           <latest></latest>
         </search>

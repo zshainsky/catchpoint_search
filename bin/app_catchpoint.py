@@ -93,6 +93,5 @@ class MIClass(Script):
         # code doesn't interfere with Splunk's operations.
         # /Applications/Splunk/bin/splunk
 
-
 if __name__ == "__main__":
     sys.exit(MIClass().run(sys.argv))
