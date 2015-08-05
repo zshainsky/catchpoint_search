@@ -19,7 +19,7 @@ class MIClass(Script):
 
 		scheme.description = "Stream specified test metrics into Splunk from Catchpoint"
 		scheme.use_external_validation = True
-		scheme.use_single_instance = True
+		scheme.use_single_instance = False
 
 		test_arg = Argument(
 			name="test_id",
