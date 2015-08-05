@@ -1,0 +1,30 @@
+<dashboard>
+  <label>Catchpoint Visualizations</label>
+  <description>Show the various searches to power a panel.</description>
+  <!-- This row contains three panels -->
+  <row>
+    <!--<panel>
+
+    </panel>-->
+    
+    
+    
+    
+    <panel>
+      <chart>
+       <title>Number of Unique 'Event Bundles' Within Index</title>
+        
+        <!-- Inline search derived from a pivot -->
+        <search>
+          <query>
+            index=catchpoint | timechart count by start usenull=f
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.axisTitleY.text"># of 'Event Bundles'</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
