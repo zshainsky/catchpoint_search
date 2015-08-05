@@ -7,14 +7,18 @@ def enumerate_data(structure):
     if type(structure) is list:
         return list(enumerate(structure))
 
-""" Integration edit: 
-        driver.py
-        raw_data = catchpoint.Catchpoint().raw(creds)
-        # print frame.search(raw_data)
+# overview: initiates the mapping algorithm.
+# returns new mapped dictionary, which will become a field under it's parent key -- 'detail'
+def init_map(data, LENGTH, blueprint, values_list):
+    an_item = {}
+    elements = ['synthetic_metrics', 'host_Ip', 'breakdown_2', 'breakdown_1', 'dimension']
 
-        mapped = frame.search(raw_data)
-        return mapped
-"""
+    # overview: for each element x, create a new key/value pair within the dictionary named 'an_item'
+    # by completing case matches against the element x. if case is found, index into the value_collection at element x
+    # and return. The return value will become the 'value' field within the key/value pair structure.
+    for x in elements:
+        an_item[x] = case_match_metrics(x, data, LENGTH, blueprint, values_list)
+    return an_item
 
 # map synth. metric values to its keys -- return a mapped array of JSON
 def map_synthetic(LENGTH, blueprint, values_list):
@@ -54,42 +58,42 @@ def search(structure):
     value_collection_key = {}
     structure = enumerate_data(structure)
     details = {}
-    an_item = {}
     simple_metrics = {}
     if structure is None:
         return
     if len(structure) > 0:
+
+        # overview: the algorithm begins by searching through the four main keys of the structure:
+        # 'start', 'end', 'timezone' and 'details'
         for i in range(len(structure)):
+
             # case match against the first three main fields
             simple_metrics[structure[i]] = case_match_main(structure[i], data)
 
             if structure[i] == 'detail':
-                #overview: create a dictionary of detail's value to access its contents by indexing into
+                # overview: create a dictionary of detail's value to access its contents by indexing into
                 a_detail_index = enumerate_data(data[structure[i]])
                 for j in range(len(data[structure[i]])):
 
+                    # overview: the 'blueprint' or 'keys'. the place-holding structure we will use as a scaffold to build our
+                    # desired mapping with the values in the 'items' field
                     if a_detail_index[j] == 'fields':
                         value_collection_key = data[structure[i]][a_detail_index[j]] # save the template to map into
-
-                    if a_detail_index[j] == 'items':
                         value_collection_key_count = len(data[structure[i]][a_detail_index[j]])
-                        for s in range(value_collection_key_count):
-                            # overview: collection of only raw data metric values
-                            value_collection = data[structure[i]][a_detail_index[j]]
 
-                            for k in range(len(value_collection_key)):
-                                # overview: case match against remaining json keys -- results in mapping its expected values
-                                elements = ['synthetic_metrics', 'host_Ip', 'breakdown_2', 'breakdown_1', 'dimension']
-                                for x in elements:
-                                    an_item[x] = case_match_metrics(x, value_collection[s],
-                                                                    len(value_collection[s]['synthetic_metrics']),
-                                                                    value_collection_key['synthetic_metrics'],
-                                                                    value_collection[s]['synthetic_metrics'])
+                    # overview: the 'items' field is the foundation of the value_collection array
+                    # the 'items' field holds all the values which need to be mapped into their respective placeholders
+                    if a_detail_index[j] == 'items':
+                        value_collection = data[structure[i]][a_detail_index[j]]
 
-                            #overview: store synthetic_metrics JSONs in a parent dictionary called detail
-                            #refer to its indices as synthetic_metrics_i -- where i is an integer value
-                            index = "details_{0}".format(s)
-                            details[index] = an_item
+                        # overview: for each k index within the value_collection array (an array which holds only values
+                        # waiting to be mapped), initiates the mapping algorithm and returns a key/value pair structure.
+                        for k in range(value_collection_key_count):
+                            index = "details_{0}".format(k)
+                            details[index] = init_map(value_collection[k],
+                                                      len(value_collection[k]['synthetic_metrics']),
+                                                      value_collection_key['synthetic_metrics'],
+                                                      value_collection[k]['synthetic_metrics'])
 
     simple_metrics["detail"] = details
     return simple_metrics
