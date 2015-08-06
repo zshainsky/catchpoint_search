@@ -81,7 +81,7 @@ class MIClass(Script):
                 element = {'start': content['start'], 'end': content['end'], 'timezone': content['timezone'],
                            'breakdown_1': metric['breakdown_1'], 'breakdown_2': metric['breakdown_2'], 'dimension': metric['dimension'],
                            'host_Ip': metric['host_Ip'], 'synthetic_metric': metric['synthetic_metrics'] }
-                event_data.data = json.dumps(element, sort_keys=True, indent=4, separators=(',', ': '))
+                event_data.data = json.dumps(element, sort_keys=True)
 
                 # Testing:
                 # print event_data.data
