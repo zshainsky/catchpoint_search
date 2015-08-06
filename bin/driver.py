@@ -54,25 +54,15 @@ class CPDrive(object):
 
         raw_data = catchpoint.Catchpoint().raw(creds)
         mapped = frame.search(raw_data)  # unabridged, raw information
-        # print json.dumps(mapped)
-        # json.dumps(mapped["detail"])
-
-        return mapped  # json.dumps(mapped, sort_keys=True, indent=4, separators=(',', ': '))
+        return mapped
 
 # for testing purposes only below:
+
 # content = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
-# for detail_index in rd["detail"]:
-#     event = {'start': rd['start'],
-#              'end': rd['end'],
-#              'timezone': rd['timezone'],
-#              detail_index: rd["detail"][detail_index]}
-#     print '\n\nthe event: \n', json.dumps(event, sort_keys=True)
-
-
 # for index in content["detail"]:
 #     metric = content["detail"][index]
 #     # print metric
 #     element = {'start': content['start'], 'end': content['end'], 'timezone': content['timezone'],
 #            'breakdown_1': metric['breakdown_1'], 'breakdown_2': metric['breakdown_2'], 'dimension': metric['dimension'],
 #            'host_Ip': metric['host_Ip'], 'synthetic_metric': metric['synthetic_metrics'] }
-#     print '\n\n{0}: \n'.format(index), json.dumps(element, sort_keys=True)
+#     print '\n\n{0}: \n'.format(index), json.dumps(element, sort_keys=True, indent=4, separators=(',', ': '))

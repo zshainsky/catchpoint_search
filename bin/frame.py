@@ -1,5 +1,3 @@
-import json
-
 #overview: retains and enumerates key of a dictionary key value pair
 def enumerate_data(structure):
     if type(structure) is dict:
@@ -20,25 +18,60 @@ def init_map(data, LENGTH, blueprint, values_list):
         an_item[x] = case_match_metrics(x, data, LENGTH, blueprint, values_list)
     return an_item
 
-# map synth. metric values to its keys -- return a mapped array of JSON
-def map_synthetic(LENGTH, blueprint, values_list):
+'''
+@param LENGTH:
+    represents the length of value_collection dictionary indexed at 'synthetic_metric' --
+    hence, LENGTH can be described the length of the synthetic_metric array
+    note: value_collection is simply a large array filled entirely of values. more pointedly, 
+    value_collection contains all the values to be mapped for the parent key 'detail'.
+@param blueprint:
+    represents a dictionary of 'key/value pairs' -- otherwise known as a dictionary of dictionaries.
+    we use blueprint to index into 'synthetic_metrics' dictionary.
+    blueprint['synthetic_metrics'] represents the place-holding structure (dictionary) we will use as a scaffold to build our
+    desired mapping with the values held in the value_collection dictionary
+    indexing in once more to the 'name' field , we use the value of blueprint['synthetic_metrics']['name'] to represent the keys
+    of the synthetic_metrics dictionary within the brand new data structure we are constructing.
+@param value_collection_AT_synthetic_metrics_INDEX:
+    note: value_collection is an array of dictionaries, all containing the values to be mapped for the parent key 'detail'. 
+    value_collection['at some arbitrary array index']['synthetic_metrics'] fetches a singular synthetic_metrics array holding 
+    only synthetic_metrics values produced from making a get request to the Catchpoint API tests endpoint. 
+Logic: If we iterate through the 'value_collection_AT_synthetic_metrics_INDEX' array while, at the same time, iterating through
+the blueprint structure as the desired indices, we are able to perform dynamic mappings across all synthetic_metrics values.
+'''
+def map_synthetic(LENGTH, blueprint, value_collection_AT_synthetic_metrics_INDEX):
     synthetic_metrics_structure = [] # push new elements to dictionary.
     for index in range(LENGTH):  # length of synth. field array
         key = blueprint[index]['name']
-        value = str(values_list[index])
+        value = str(value_collection_AT_synthetic_metrics_INDEX[index])
         synthetic_metrics_structure.append({str(key): value})  #
     return synthetic_metrics_structure
 
 
-# case match against the first three main fields
+''' 
+@param x: 
+    represents one of the three keys being sent into the function for evaluation.
+@param data:
+    represents the data structure (a dictionary) containing values
+Logic: If we were to index into the data structure, 'data' at 'x' (data[x]),
+the information fetched can then be set as a value field of 'key/value' object within a brand new data structure.
+'''
 def case_match_main(x, data):
     return {
         'start': str(data[x]),
         'end': str(data[x]),
         'timezone': data[x]
     }.get(x, None)
-
-# case match against remaining test metrics of raw data
+    
+''' 
+@param x: 
+    represents one of the five keys being sent into the function for evaluation.
+@param data:
+    represents the data structure (a dictionary) containing values
+@other parameters: 
+    see map_synthetic function above for more information.
+Logic: If we were to index into the data structure, 'data' at 'x' (data[x]),
+the information fetched can then be set as a value field of 'key/value' object within a brand new data structure.
+'''
 def case_match_metrics(x, data, LENGTH, blueprint, values_list):
     return {
         'synthetic_metrics' : map_synthetic(LENGTH, blueprint, values_list),
@@ -55,10 +88,10 @@ def case_match_metrics(x, data, LENGTH, blueprint, values_list):
 # -- returns an array of dictionaries containing mapped metrics 
 def search(structure):
     data = structure
-    value_collection_key = {}
     structure = enumerate_data(structure)
     details = {}
     simple_metrics = {}
+    
     if structure is None:
         return
     if len(structure) > 0:

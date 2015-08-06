@@ -11,6 +11,8 @@
     
     
     <panel>
+      <!--The chart renders the relationship between common events 
+      according to the value of the start (time) key. -->
       <chart>
        <title>Number of Unique 'Event Bundles' Within Index</title>
         
