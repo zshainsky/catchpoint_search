@@ -52,8 +52,8 @@ class CPDrive(object):
         creds['api_URIs'][1]['endpoint_uri']['hostname_prefix'] = creds['api_URIs'][0]['token_uri']['hostname_prefix']
         creds['api_URIs'][1]['endpoint_uri']['path_template_arg1'] = creds['api_URIs'][0]['token_uri']['path_template_arg1']
 
-        raw_data = catchpoint.Catchpoint().raw(creds)
-        mapped = frame.search(raw_data)  # unabridged, raw information
+        raw_data = catchpoint.Catchpoint().raw(creds) # for ingesting local raw data, call frame.raw_data_testing_purposes()
+        mapped = frame.search(raw_data)  # unabridged, raw information 
         return mapped
 
 # for testing purposes only below:
@@ -65,4 +65,4 @@ class CPDrive(object):
 #     element = {'start': content['start'], 'end': content['end'], 'timezone': content['timezone'],
 #            'breakdown_1': metric['breakdown_1'], 'breakdown_2': metric['breakdown_2'], 'dimension': metric['dimension'],
 #            'host_Ip': metric['host_Ip'], 'synthetic_metric': metric['synthetic_metrics'] }
-#     print '\n\n{0}: \n'.format(index), json.dumps(element, sort_keys=True, indent=4, separators=(',', ': '))
+#     print '\n\n{0}: \n'.format(index), json.dumps(element, sort_keys=True)
