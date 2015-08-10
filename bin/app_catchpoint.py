@@ -20,7 +20,7 @@ class MIClass(Script):
 
         scheme.description = "Stream specified test metrics into Splunk from Catchpoint"
         scheme.use_external_validation = True
-        scheme.use_single_instance = True
+        scheme.use_single_instance = False
 
         test_arg = Argument(
             name="test_id",
@@ -51,9 +51,6 @@ class MIClass(Script):
 
         event_data = Event()
         event_data.index = "catchpoint"
-        # event_data.sourcetype="json"
-        #	index='catchpoint',  # assuming container element which holds all events.
-        #	sourcetype='json'
 
         # Create driver class object
         cp_object = CPDrive()
