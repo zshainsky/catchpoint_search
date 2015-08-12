@@ -53,12 +53,16 @@ class CPDrive(object):
         creds['api_URIs'][1]['endpoint_uri']['path_template_arg1'] = creds['api_URIs'][0]['token_uri']['path_template_arg1']
 
         raw_data = catchpoint.Catchpoint().raw(creds) # for ingesting local raw data, call frame.raw_data_testing_purposes()
-        mapped = frame.search(raw_data)  # unabridged, raw information 
+        mapped = frame.search(raw_data)  # unabridged, raw information
         return mapped
 
 # for testing purposes only below:
 
-# content = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', 81093)
+# content = CPDrive().retrieve_rd_wrapper('RY-Rc-jSl18UYU23', '59d65360-9248-410e-a697-28e62b70054e', '76386,81093')
+# print content
+# for x in content['detail']['items']:
+#     print x
+
 # for index in content["detail"]:
 #     metric = content["detail"][index]
 #     # print metric

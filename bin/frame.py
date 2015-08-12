@@ -82,7 +82,7 @@ def case_match_main(x, data):
         'end': str(data[x]),
         'timezone': data[x]
     }.get(x, None)
-    
+
 ''' 
 @param x: 
     represents one of the five keys being sent into the function for evaluation.
@@ -110,14 +110,14 @@ values into a more manageable, compact dictionary
 '''
 def case_match_detail_elements(x, structure, structure_key):
     return {
-        'fields': {'value_collection_blueprint': structure[structure_key][x],
-                   'value_collection_key_count': len(structure[structure_key][x])
-                   },
+        'fields': {'value_collection_blueprint': structure[structure_key][x]},
 
-        'items': {'value_collection': structure[structure_key][x]}
+        'items': {'value_collection': structure[structure_key][x],
+                  'how_many_items_in_items_array': len(structure[structure_key][x])}
+
     }.get(x, None)
 
-# overview: maps raw data values into a key/value structure 
+# overview: maps raw data values into a key/value structure
 # -- the function walks through the raw data (data structure) and executes a mapping
 # of fields specified by the raw data 
 # -- returns an array of dictionaries containing mapped metrics 
@@ -145,15 +145,19 @@ def search(structure):
                     Logic: To determine if case 'child_structure' is in 'detail', match against all keys in function --
                     return value field of matched. If no match found, return the None object. Do while there exist
                     remaining children of detail to iterate through.
+
+                    Debugging note: length of items in items array computed by --
+                    len(structure[structure_key][child_structure])
                     '''
                     dictionary[child_structure] = case_match_detail_elements(child_structure, structure, structure_key)
 
-                _key_count = dictionary['fields']['value_collection_key_count']
+                _item_count = dictionary['items']['how_many_items_in_items_array']
                 _blueprint = dictionary['fields']['value_collection_blueprint']
                 value_collection = dictionary['items']['value_collection']
-                if _key_count and _blueprint and value_collection:
+                if _item_count and _blueprint and value_collection:
 
-                    for i in range(_key_count):
+                    for i in range(_item_count):
+                        # print "_item_count: ", _item_count
                         index = "details_{0}".format(i)
                         details[index] = init_map(value_collection[i],
                                                   len(value_collection[i]['synthetic_metrics']),
