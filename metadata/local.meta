@@ -21,8 +21,8 @@ version = 6.2.3
 modtime = 1438207260.582388000
 
 [app/install/state]
-version = 6.2.4
-modtime = 1438790137.088393000
+version = 6.2.5
+modtime = 1439496117.658034000
 
 [views/catchpoint_dashboard]
 version = 6.2.5
