@@ -1,5 +1,5 @@
 <!-- TODO: Templatize this content -->
-<nav>
+<nav color="#1057A7">
     <view name="flashtimeline" default='true' />
     <collection label="Dashboards">
         <view source="unclassified" match="dashboard"/>
