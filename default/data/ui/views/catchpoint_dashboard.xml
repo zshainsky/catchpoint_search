@@ -45,7 +45,9 @@
         </search>
         <fieldForLabel>field_label</fieldForLabel>
         <fieldForValue>field</fieldForValue>
-        <default>synthetic_metric{}.Server Response (ms)</default>
+        <default>synthetic_metric{}.DNS (ms)</default>
+        <valuePrefix>"</valuePrefix>
+        <valueSuffix>"</valueSuffix>
         <prefix>"</prefix>
         <suffix>"</suffix>
       </input>
