@@ -4,40 +4,6 @@
   <!-- This row contains three panels -->
   <row>
     <panel>
-      <chart>
-        <title>Number of Unique 'Event Bundles' Within Index</title>
-        <search>
-          <query>index=catchpoint | timechart count by start usenull=f</query>
-          <earliest>0</earliest>
-        </search>
-        <!-- Inline search derived from a pivot -->
-        <option name="charting.chart">column</option>
-        <option name="charting.chart.stackMode">stacked</option>
-        <option name="charting.axisTitleY.text"># of 'Event Bundles'</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisX.scale">linear</option>
-        <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.enabled">false</option>
-        <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart.bubbleMaximumSize">50</option>
-        <option name="charting.chart.bubbleMinimumSize">10</option>
-        <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
-        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">all</option>
-        <option name="charting.layout.splitSeries">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
-        <option name="charting.legend.placement">right</option>
-      </chart>
-    </panel>
-  </row>
-  <row>
-    <panel>
       <input type="dropdown" token="tok_metric" searchWhenChanged="true">
         <label>Synthetic Metrics</label>
         <search>
@@ -149,10 +115,10 @@
   <row>
     <panel>
       <chart>
-        <title>Top 100 DNS (ms) Metric Values</title>
+        <title>Total # of Test Runs Within Index (Grouped By Test IDs)</title>
         <search>
-          <query>index=catchpoint "synthetic_metric{}.DNS (ms)"=*  | fields "synthetic_metric{}.DNS (ms)"| top limit=100 "synthetic_metric{}.DNS (ms)"</query>
-          <earliest>0</earliest>
+          <query>index=catchpoint | rex field=source "app_catchpoint\:\/\/(?&lt;input_name&gt;.*)"| timechart count by source</query>
+          <earliest></earliest>
           <latest></latest>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -164,7 +130,7 @@
         <option name="charting.axisY.scale">linear</option>
         <option name="charting.axisY2.enabled">0</option>
         <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">scatter</option>
+        <option name="charting.chart">column</option>
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>

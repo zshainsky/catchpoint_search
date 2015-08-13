@@ -1,60 +1,30 @@
-<dashboard>
-  <label>Catchpoint Commit History</label>
-  <description>Overview of the Splunk App for Catchpoint's Dev Cycle</description>
+<form>
+  <label>Catchpoint Visualizations</label>
+  <description>Show the various searches to power a panel.</description>
+  <!-- This row contains three panels -->
   <row>
     <panel>
-      <single>
+      <input type="dropdown" token="tok_metric" searchWhenChanged="true">
+        <label>Synthetic Metrics</label>
         <search>
-          <query>sourcetype=github_commits| stats count | rename count AS "Total Commits"</query>
+          <query>index=catchpoint | fields "synthetic_metric*"| fieldsummary| fields field | eval field_label=substr(field, 20)</query>
         </search>
-        <option name="underLabel">Total Number of Commits</option>
-        <option name="linkView">search</option>
-        <option name="drilldown">none</option>
-      </single>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <table>
-        <title>Number of Commits by User</title>
-        <search>
-          <query>sourcetype=github_commits| stats count  by author | rename count AS "Number of Commits" author AS "Author of Commit"</query>
-          <earliest>0</earliest>
-          <latest></latest>
-        </search>
-        <option name="wrap">true</option>
-        <option name="rowNumbers">false</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">cell</option>
-        <option name="count">10</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <table>
-        <title>Commit History</title>
-        <search>
-          <query>sourcetype=github_commits| sort -_time| eval formatted_time=strftime(_time, "%b %d, %Y %H:%M")| table formatted_time, author, message |rename author AS "Author" message AS "Message" formatted_time AS "Date"</query>
-          <earliest>0</earliest>
-          <latest></latest>
-        </search>
-        <option name="wrap">true</option>
-        <option name="rowNumbers">false</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">cell</option>
-        <option name="count">10</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
+        <fieldForLabel>field_label</fieldForLabel>
+        <fieldForValue>field</fieldForValue>
+        <default>synthetic_metric{}.DNS (ms)</default>
+        <valuePrefix>"</valuePrefix>
+        <valueSuffix>"</valueSuffix>
+        <prefix>"</prefix>
+        <suffix>"</suffix>
+      </input>
       <chart>
-        <title>Commits over Time by Author</title>
         <search>
-          <query>sourcetype=github_commits| timechart count by author</query>
+          <query>index=catchpoint $tok_metric$=*  | fields $tok_metric$ | timechart avg($tok_metric$)| rename avg($tok_metric$) AS $tok_metric$</query>
           <earliest>0</earliest>
+          <latest></latest>
         </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.axisY2.enabled">false</option>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
         <option name="charting.axisTitleX.visibility">visible</option>
@@ -62,15 +32,13 @@
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.scale">linear</option>
         <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.enabled">false</option>
         <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">area</option>
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>
         <option name="charting.chart.nullValueMode">gaps</option>
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.stackMode">default</option>
         <option name="charting.chart.style">shiny</option>
         <option name="charting.drilldown">all</option>
         <option name="charting.layout.splitSeries">0</option>
@@ -82,10 +50,42 @@
   <row>
     <panel>
       <chart>
-        <title>Total # of Test Runs Within Index (Grouped By Test IDs)</title>
+        <title>Webpage Response (ms)</title>
         <search>
-          <query>index=catchpoint | rex field=source "app_catchpoint\:\/\/(?&lt;input_name&gt;.*)"| timechart count by source</query>
-          <earliest></earliest>
+          <query>index=catchpoint "synthetic_metric{}.Webpage Response (ms)"=*  | fields "synthetic_metric{}.Webpage Response (ms)" | timechart avg("synthetic_metric{}.Webpage Response (ms)")</query>
+          <earliest>0</earliest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">false</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>DNS (ms)</title>
+        <search>
+          <query>index=catchpoint "synthetic_metric{}.DNS (ms)"=*   | fields "synthetic_metric{}.DNS (ms)"| timechart avg("synthetic_metric{}.DNS (ms)")</query>
+          <earliest>0</earliest>
           <latest></latest>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -112,4 +112,4 @@
       </chart>
     </panel>
   </row>
-</dashboard>
+</form>
